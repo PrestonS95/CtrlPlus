@@ -16,15 +16,21 @@ server.use(morgan('dev'));
 server.use(express.json());
 
 // here's our static files
-const path = require('path');
-server.use(express.static(path.join(__dirname, 'build')));
+// const path = require('path');
+// server.use(express.static(path.join(__dirname, 'build')));
 
 // here's our API
 server.use('/api', require('./api'));
 
 // by default serve up the react app if we don't recognize the route
+// here's our static files. Serve the files from the 'public' directory instead of 'build'.
+const path = require('path');
+server.use(express.static(path.join(__dirname, 'public')));
+
+
+// by default serve up the react app if we don't recognize the route
 server.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // bring in the DB connection

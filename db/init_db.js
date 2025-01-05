@@ -3,20 +3,20 @@ const {
   // declare your model imports here
   // for example, User
 } = require('./');
-const { createCart, getAllCarts, attachProductsToCarts, getAllPurchasedCarts } = require('./models/cart');
+con
+const { createCart, getAllCarts, attachProductsToCarts } = require('./models/cart');
 const { addProducttoCart } = require('./models/cartProducts');
 const { getAllProducts } = require('./models/product');
 
 const csv = require('csv-parser')
-const fs = require('fs');
-const { response } = require('express');
+const fs = require('fs')
 const results = []
 
 fs.createReadStream('db/models/Products.csv')
   .pipe(csv({}))
   .on('data', (data) => results.push(data))
   .on('end', () => {
-    // console.log(results)
+    console.log(results)
   });
 
 async function buildTables() {
@@ -27,7 +27,6 @@ async function buildTables() {
 async function dropTables() {
   console.log("dropping Tables")
   await client.query(`
-        DROP TABLE IF EXISTS orderhistory;
         DROP TABLE IF EXISTS reviews;
         DROP TABLE IF EXISTS cart_products;
         DROP TABLE IF EXISTS carts;
@@ -64,13 +63,6 @@ async function createTables() {
           "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
           "isPurchased" BOOLEAN DEFAULT false
         );
-        CREATE TABLE orderhistory (
-          id SERIAL PRIMARY KEY,
-          "cartId" INTEGER REFERENCES carts(id),
-          email varchar(255),
-          date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-          price DECIMAL(10,2) NOT NULL
-        );
         CREATE TABLE cart_products (
           id SERIAL PRIMARY KEY,
           "order_id" INTEGER REFERENCES carts(id),
@@ -101,7 +93,7 @@ async function populateInitialData() {
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
     const usersToCreate = [
-      { email: 'albert@gmail.com', password: 'bertie99', isAdmin: true},
+      { email: 'albert@gmail.com', password: 'bertie99' },
       { email: 'sandra@gmail.com', password: 'sandra123' },
       { email: 'glamgal@gmail.com', password: 'glamgal123' },
       { email: 'georgie@gmail.com', password: 'georgie1234' },
@@ -144,13 +136,13 @@ async function createInitialCarts() {
       id: 1,
       user_id: 2,
       created_at: "DEFAULT",
-      isPurchased: true,
+      isPurchased: false,
     },
     {
       id: 2,
       user_id: 1,
       created_at: `${date.toJSON()}`,
-      isPurchased: true,
+      isPurchased: false,
     },
     {
       id: 3,
@@ -244,25 +236,16 @@ async function creationInitalCartProducts() {
     cartProductsToCreate.map(addProducttoCart)
     )
   }
-  // async function createInitOrderHistory(){
-  //   let it
-  //   let orders = Cart.getAllPurchasedCarts()
-  //   .then addCartToOrderHistory({orders})
-  //   // orders.then( response.send(orders))
-  //     // it = orders(orders.id,orders.email,orders.products,orders.price))
-  //   console.log(orders,'looo')
-  // createInitOrderHistory()
-  // }
   async function getcbyus(id){
   let cartsss =  await Cart.getAllPurchasedCarts({id: 4})
  }
   buildTables()
-    .then(dropTables)
-    .then(createTables)
-    .then(populateInitialData)
-    .then(createInitialProducts)
-    .then(createInitialCarts)
-    .then(creationInitalCartProducts)
-    // .then(createInitOrderHistory)
-    .catch(console.error)
-    .finally(() => client.end());
+  .then(dropTables)
+  .then(createTables)
+  .then(populateInitialData)
+  .then(createInitialProducts)
+  .then(createInitialCarts)
+  .then(creationInitalCartProducts)
+  .then(getcbyus)
+  .catch(console.error)
+  .finally(() => client.end());
