@@ -13,17 +13,18 @@ apiRouter.post('/:order_id', requireUser, async (req,res,next)=>{
   const cartId = daatat.id
   const data = {};
  const orderId = req.params.order_id;
-  let  = productId
+  let product_Id = productId
   try {
     const neworder = await Order.addProducttoCart({orderId, productId, quantity, price})
+    console.log(neworder)
     res.send(neworder)
-    
+
   } catch (error) {
     console.log(error)
   }
 })
 //DELETE/api/cart/order_id
-apiRouter.delete("/:order_id", requireUser, async (req, res, next) => { 
+apiRouter.delete("/:order_id", requireUser, async (req, res, next) => {
     const id = req.params.id
   try {
     const order = await Order.deleteCartProd(id);
