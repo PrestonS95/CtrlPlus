@@ -1,0 +1,8 @@
+.cartInformation{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.guestCartContainer{
+    border: solid 1px pink;
