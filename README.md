@@ -21,14 +21,11 @@ $ git init
 ```
 
 2. Create a bare GitHub repo (no `.gitignore`, `README.md`, `CHANGELOG.md`, or license) and copy the ssh address to assign to your local clone with `git remote add origin <paste-your-ssh-address-here>`
-
 3. `npm install` to add project dependencies to your local machine.
-
 4. Choose a name for your local database instance and edit `db/index.js` to assign the name to `DB_NAME`. Next, run `createdb <your-db-name-goes-here>` from your command line to spin up your database.
-
 5. `npm run start:dev` will build your React app and start your express server in concurrent mode (meaning that both processes run in the same terminal window). Once this command is running, you can start developing! `nodemon` and `react-scripts` will listen to file changes and update continuously (hot-module-reloading).
 
-<em>NB: If you see a `proxy error` message in the terminal, just hard refresh your browser window and you'll be all set.</em>
+`<em>`NB: If you see a `proxy error` message in the terminal, just hard refresh your browser window and you'll be all set.`</em>`
 
 ## Project Structure
 
@@ -115,7 +112,7 @@ Under Settings, choose the Secrets option under Security. You'll see the followi
 
 - `HEROKU_API_KEY`: you'll find this listed in your heroku account settings
 - `HEROKU_APP_NAME`: this is the project name you chose above
-- `HEROKU_EMAIL`: this is the email address associated with your heroku account
+- `HEROKU_EfMAIL`: this is the email address associated with your heroku account
 
 ![](/assets/github-actions-secrets.png)
 
@@ -141,4 +138,5 @@ As you project grows you'll probably want to re-seed and refresh your database f
 # Wrapup
 
 You'll be able to view your fullstack application by running `heroku open`. Bask in the glory of your live site, and happy coding!
+
 # CtrlPlus
